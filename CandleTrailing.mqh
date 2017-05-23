@@ -1,14 +1,7 @@
-//+------------------------------------------------------------------+
-//|                                          CandleTrailingEntry.mqh |
-//|                                 Copyright 2017, Keisuke Iwabuchi |
-//|                                         http://order-button.com/ |
-//+------------------------------------------------------------------+
-#property copyright "Copyright 2017, Keisuke Iwabuchi"
-#property link      "http://order-button.com/"
 #property strict
 
 
-class CandleTrailingEntry
+class CandleTrailing
 {
    private:
       double point;
@@ -20,14 +13,14 @@ class CandleTrailingEntry
       int    bars;
 
    public:
-      CandleTrailingEntry(double pips, double percentage = 50);
+      CandleTrailing(double pips, double percentage = 50);
       
       int Signal(void);
    
 };
 
 
-CandleTrailingEntry::CandleTrailingEntry(double pips, double percentage = 50)
+CandleTrailing::CandleTrailing(double pips, double percentage = 50)
 {
    if(pips <= 0) pips = 1;
    this.point = (Digits == 3 || Digits == 5) ? pips * Point * 10 : pips * Point;
@@ -44,7 +37,7 @@ CandleTrailingEntry::CandleTrailingEntry(double pips, double percentage = 50)
 }
 
 
-int CandleTrailingEntry::Signal()
+int CandleTrailing::Signal()
 {
    if(this.bars == Bars) return(0);
    
