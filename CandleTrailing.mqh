@@ -1,6 +1,12 @@
 #property strict
 
 
+/**
+ * Use trailing stop to check if the current price is higher or lower.
+ * Instead of using the trainling stop immediately,
+ * it is a feature to wait for the candlestick
+ * to be formed to a certain extent.
+ */
 class CandleTrailing
 {
    private:
@@ -20,6 +26,12 @@ class CandleTrailing
 };
 
 
+/**
+ * Constructer.
+ *
+ * @param double pips  Trailing stop value.
+ * @param double percentage  Wait until what percent candlestick is formed.
+ */
 CandleTrailing::CandleTrailing(double pips, double percentage = 50)
 {
    if(pips <= 0) pips = 1;
@@ -37,7 +49,14 @@ CandleTrailing::CandleTrailing(double pips, double percentage = 50)
 }
 
 
-int CandleTrailing::Signal()
+/**
+ * Decide whether to trade.
+ *
+ * @return int  Returns 1 when buy signal occurs.
+ *              Returns -1 when sell signal occurs.
+ *              Otherwise returns 0.
+ */
+int CandleTrailing::Signal(void)
 {
    if(this.bars == Bars) return(0);
    
