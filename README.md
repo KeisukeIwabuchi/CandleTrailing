@@ -1,5 +1,5 @@
 # CandleTrailing
-Logic to determine if the current price is cheap or expensive in candlestick
+Logic to determine if the current price is cheap or expensive in candlestick.
 
 
 ## Description
