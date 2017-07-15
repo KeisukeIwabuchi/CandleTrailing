@@ -1,43 +1,42 @@
 # CandleTrailing
-ローソク足の中で現在の価格が割安なのか、割高なのかを判定するためのロジック   
+Logic to determine if the current price is cheap or expensive in candlestick
 
 
 ## Description
-このロジックはまずはじめに、ローソク足の形成をX%待ちます。   
-例えば日足チャートで50%待つ設定であれば、半日待つことになります。   
-1時間足で50%であれば30分です。   
+First of all, this logic waits X% for candlestick formation.
+For example, if it is set to wait 50% on the daily chart, you will have to wait for half a day.  
+It is 30 minutes if it is 50% on 1 hour foot.  
+
+When the wait time is over, we record high and low candlesticks at that point.  
+It is a logic aimed at generating a buying signal at a price higher than the high price at this time and a selling signal at a price cheaper than the low price.
    
-待ち時間が終了すると、その時点でのローソク足の高値と安値を記録します。   
-この時の高値より高い価格で売りシグナル、安値より安い価格で買いシグナルを発生させることを目指したロジックです。   
-   
-しかしこの高値・安値はまだ更新していく可能性があるため、高値超え・安値割りだけでシグナルを発生させると、より良い価格でのエントリーを逃してしまいます。   
-そこでトレーリングストップの方法を使用し、高値・安値を更新する毎に、シグナル発生の価格を更新していきます。   
-高値・安値の更新から、Ypipsだけ逆行するとシグナルを発生させる仕組みとなっています。   
-（逆光時の価格は待ち時間終了時の高値・安値よりも有利な価格であるのが条件）
+However, there is a possibility that this high / low will still be renewed, so if you generate a signal just by exceeding high price and low price, you will miss entries with better price.  
+Therefore, using the trailing stop method, we will update the price of signal generation every time we update highs and lows.
+From updating of high and low prices, if only Ypips goes backwards, it generates a signal.  
+(Conditions for backlighting are conditions that are more favorable than highs and lows at the end of waiting time)
 
 
 ## Install
-- CandleTrailing.mqhをダウンロード
-- /MQL4/Includesの中に保存
+- Download CandleTrailing.mqh
+- Save the file to /MQL4/Includes
 
 
 ## Usage
-ヘッダーファイルを読み込む   
+Includes header file.  
 `#include <CandleTrailing.mqh>`
 
-インスタンスを作成する。   
-コンストラクタの第一引数はトレーリング幅（pips）、第二引数は待機時間の割合（％）。    
+Create an instance.  
+The first argument of the constructor is the trailing width (pips), and the second argument is the percentage of waiting time (%).
+```cpp
+CandleTrailing *CT;
 
-    CandleTrailing *CT;
-    
-    int OnInit()
-    {
-       CT = new CandleTrailing(1, 50);
-    
-       return(INIT_SUCCEEDED);
-    }
+int OnInit()
+{
+   CT = new CandleTrailing(1, 50);
+   return(INIT_SUCCEEDED);
+}
+```
 
-
-判定を受け取り、結果に応じて処理を実行する。   
-0: シグナル無し, 1: 買い, -1: 売り    
+It receives the judgment and executes processing according to the result.  
+0: No signal, 1: buy signal, -1: sell signal  
 `int signal = CT.Signal();`
