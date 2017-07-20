@@ -16,6 +16,10 @@ From updating of high and low prices, if only Ypips goes backwards, it generates
 (Conditions for backlighting are conditions that are more favorable than highs and lows at the end of waiting time)
 
 
+## Requirement
+- [MQL4-Env](https://github.com/KeisukeIwabuchi/MQL4-Env)
+
+
 ## Install
 - Download CandleTrailing.mqh
 - Save the file to /MQL4/Includes
