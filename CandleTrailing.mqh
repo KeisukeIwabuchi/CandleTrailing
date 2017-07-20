@@ -1,6 +1,9 @@
 #property strict
 
 
+#include <mql4_modules\Env\Env.mqh>
+
+
 /**
  * Use trailing stop to check if the current price is higher or lower.
  * Instead of using the trainling stop immediately,
@@ -35,7 +38,7 @@ class CandleTrailing
 CandleTrailing::CandleTrailing(double pips, double percentage = 50)
 {
    if(pips <= 0) pips = 1;
-   this.point = (Digits == 3 || Digits == 5) ? pips * Point * 10 : pips * Point;
+   this.point = (__Digits == 3 || __Digits == 5) ? pips * __Point * 10 : pips * __Point;
    
    if(percentage <= 0)   percentage = 50;
    if(percentage >= 100) percentage = 50;
@@ -89,7 +92,7 @@ int CandleTrailing::Signal(void)
          this.sell_price = Close[0] - this.point;
       }
    }
-   Comment(this.buy_price, "\n", this.sell_price, "\n", this.point);
+   
    if(Close[0] >= buy_price && buy_price > 0){
       this.bars = Bars;
       return(1); 
